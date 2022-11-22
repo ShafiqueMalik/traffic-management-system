@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import TrafficMap from 'components/TrafficMap/TrafficMap';
+import React, { useEffect } from 'react';
+import { Grid, Typography } from "@mui/material"
+import RightSidebar from 'components/RightSidebar/RightSidebar';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Typography variant="h4">Traffic Map</Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={9}>
+          <TrafficMap />
+        </Grid>
+        <Grid item xs={3}>
+         <RightSidebar/>
+        </Grid>
+      </Grid>
     </div>
   );
 }
