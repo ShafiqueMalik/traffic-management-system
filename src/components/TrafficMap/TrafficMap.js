@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { GoogleMap, useJsApiLoader, KmlLayer, useLoadScript } from '@react-google-maps/api';
+import React, { useEffect, useRef } from 'react'
+import { GoogleMap, useJsApiLoader, Autocomplete, KmlLayer, useLoadScript } from '@react-google-maps/api';
 import { useSelector, useDispatch } from 'react-redux';
 import roadNetworkJson from "assets/mapFiles/QLD - local government area.json";
 import { setAllMarkers, removeMarker, setCopiedMarkerElement } from 'app/slices/mapSlice';
@@ -8,6 +8,9 @@ import $ from 'jquery';
 
 
 import "./TrafficMap.scss"
+import { Box, Button, TextField } from '@mui/material';
+import { Stack } from '@mui/system';
+import PolylineDistanceMapTopInput from './PolylineDistanceMapTopInput/PolylineDistanceMapTopInput';
 
 
 const center = { lat: -25.363, lng: 131.044 };
@@ -22,7 +25,8 @@ var landmarks = [];
 let polylineImage;
 let allUndoPolylines = [];
 let allDeletedPaths = [];
-
+let autocomplete = null;
+let polylineMarkerDistance = 2000;
 
 
 function TrafficMap() {
@@ -35,12 +39,21 @@ function TrafficMap() {
     })
 
     const [map, setMap] = React.useState(null)
+    const [distanceFieldError, setDistanceFieldError] = React.useState(false)
 
     const onLoad = React.useCallback(function callback(map) {
         setMap(map);
+        // Create the search box and link it to the UI element.
+        // const input = document.getElementById("search-map-input");
+
+        // const searchBox = new window.google.maps.places.SearchBox(input);
+
+        // map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
+
         if (!copiedCustomMarkerElement) {
             map.setOptions({ draggableCursor: 'crosshair' });
         }
+
         var drawingManager = new window.google.maps.drawing.DrawingManager({
             drawingControllOptions: {
                 position: window.google.maps.ControlPosition.CENTER_TOP,
@@ -48,7 +61,7 @@ function TrafficMap() {
                     window.google.maps.drawing.OverlayType.POLYGON,
                 ]
             },
-            map,
+            // map,
             polygonOptions: {
                 clickable: true,
                 draggable: true,
@@ -66,11 +79,13 @@ function TrafficMap() {
 
 
 
+
         // **DISPLAY LAYERS (POLYGONS)**
         // map.data.loadGeoJson(process.env.PUBLIC_URL+"/mapFiles/QLD - suburb.json");
         // map.data.loadGeoJson(process.env.PUBLIC_URL+"/mapFiles/QLD - local government area.json");
         // map.data.loadGeoJson(process.env.PUBLIC_URL+"/mapFiles/QLD - main roads network.json");
-
+        map.data.loadGeoJson(process.env.PUBLIC_URL + "/LOCAL_GOVERNMENT_AREA_LGA_Australian Capital territory.geojson");
+        //
         // I would like to be able to have different colour for each layer.
         // Lets say suburb = red / local government area = blue / main roads = green
 
@@ -133,11 +148,11 @@ function TrafficMap() {
         });
 
 
-          // **DISPLAY MARKERS - QPS STATIONS**
-            // var qpsSTATIONS = new window.google.maps.KmlLayer({
-            //     url: 'https://e762c6ab-5e8e-4d5f-825c-f5add6d6c27f.usrfiles.com/ugd/e762c6_f150ef60ff424ef3a8636a1093fb45d3.kml',
-            //     map,
-            // });
+        // **DISPLAY MARKERS - QPS STATIONS**
+        // var qpsSTATIONS = new window.google.maps.KmlLayer({
+        //     url: 'https://e762c6ab-5e8e-4d5f-825c-f5add6d6c27f.usrfiles.com/ugd/e762c6_f150ef60ff424ef3a8636a1093fb45d3.kml',
+        //     map,
+        // });
     }, []);
     if (!copiedCustomMarkerElement) {
         map?.setOptions({ draggableCursor: 'crosshair' });
@@ -154,24 +169,33 @@ function TrafficMap() {
             if (copiedCustomMarkerElement) {
                 customHtmlElement.setAttribute("imageId", copiedCustomMarkerElement?.attr("imageId"));
                 customHtmlElement.innerHTML = `<div class="map-img-container" >
-                            <img src="${copiedCustomMarkerElement?.find("img").attr("src")}"  alt="${copiedCustomMarkerElement?.find("img").attr("src")}"/>
+                            <img id="marker-img" src="${copiedCustomMarkerElement?.find("img").attr("src")}"  alt="${copiedCustomMarkerElement?.find("img").attr("src")}"/>
                             <button class="marker-delete-btn" data-image-id="${copiedCustomMarkerElement?.attr("imageId")}">X</button>
                         </div>`;
                 $(".custom-marker.active").removeClass("active");
             } else {
                 customHtmlElement.setAttribute("imageId", $selectImg?.attr("data-image-id") ?? "");
                 customHtmlElement.innerHTML = `<div class="map-img-container" >
-                            <img src="${$selectImg.attr("src")}"  alt="${$selectImg.attr("src")}"/>
+                            <img id="marker-img" src="${$selectImg.attr("src")}"  alt="${$selectImg.attr("src")}"/>
                             <button class="marker-delete-btn" data-image-id="${$selectImg.attr("data-image-id")}">X</button>
+                            <div class="custom-marker-context-menu">
+                                <div class="custom-marker-context-menu-item delete-icon" >
+                                   <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="DeleteIcon"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
+                                </div>
+                                <div class="custom-marker-context-menu-item edit-icon" >
+                                   <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="EditIcon"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                                </div>
+                            </div>
                         </div>`;
             }
 
             const markerView = new window.google.maps.marker.AdvancedMarkerView({
                 map,
-                position: latLng,
+                position: { lat: latLng.lat(), lng: latLng.lng() },
                 content: customHtmlElement,
                 draggable: true
             });
+            console.log(markerView.position.lat, markerView.position.lng);
             return markerView;
         }
         //polyline
@@ -185,6 +209,7 @@ function TrafficMap() {
             }
         }
 
+
         function addMarkerOnPolyline(markerImg, currentPoly) {
             if (landmarks.length && (landmarks.length > 0)) {
                 for (var i = 0; i < landmarks.length; i++) {
@@ -193,7 +218,8 @@ function TrafficMap() {
                     }
                 }
             }
-            for (var i = 0; i < currentPoly.Distance(); i += 2000) {
+            console.log(polylineMarkerDistance)
+            for (var i = 0; i < currentPoly.Distance(); i += polylineMarkerDistance) {
                 var km_point = currentPoly.GetPointAtDistance(i);
                 if (km_point) {
                     var infoWindowContent = "marker " + i / 2000 + " of " + Math.floor(currentPoly.Distance() / 2000) + "<br>kilometer " + i / 1000 + " of " + (currentPoly.Distance() / 1000).toFixed(2);
@@ -221,7 +247,6 @@ function TrafficMap() {
 
         if ($(".right-sidebar-content img.sign-polyline.active")?.length > 0) {
             let $selectedImg = $(".right-sidebar-content img.sign-polyline");
-            console.log($selectedImg)
             //**CREATE POLYLINE** 
             if (!currentPolyline) {
                 currentPolyline = new window.google.maps.Polyline({
@@ -237,25 +262,26 @@ function TrafficMap() {
                 currentPolyline.setMap(map);
                 allPolylines.push(currentPolyline);
 
+                $("#polyline-distance-input").show();
 
                 var polylineDoubleClick = function (e) {
-                    console.log("Double Click")
+                    console.log("Double Click");
                     e.stop();
                     if (currentPolyline?.editable) {
                         currentPolyline.setEditable(false);
                         currentPolyline = undefined;
-
+                        $("#polyline-distance-input").hide();
                     } else {
                         this.setEditable(true);
                         currentPolyline = this;
                         allMarkers.forEach((marker) => {
                             $(marker.element).find(".custom-marker").removeClass("active")
-                        })
-
+                        });
+                        $("#polyline-distance-input").show();
                     }
                     $(document).off("keydown").on("keydown", function (e) {
                         //delete key
-                        if (e.keyCode == 46) {
+                        if (e.key == "Delete") {
                             allDeletedPolylines.push(currentPolyline);
                             deleteMarkerOnPolyline(polylineImage, currentPolyline);
 
@@ -345,33 +371,6 @@ function TrafficMap() {
                 var path = currentPolyline.getPath();
                 path.push(event.latLng);
                 $(document).off("keydown").on("keydown", function (e) {
-                    //delete key
-                    // if (e.ctrlKey && e.key === 'z') {
-
-                    //     //path redo
-                    //     if (currentPolyline?.editable) {
-                    //         let p = path.pop();
-
-                    //         let found = false;
-                    //         allDeletedPaths.forEach((item) => {
-                    //             if (item.deletePolyline.id === currentPolyline.id) {
-                    //                 found = true;
-                    //                 item.deletedPath.push(p);
-                    //             }
-                    //         });
-                    //         if (!allDeletedPaths.length || !found) {
-                    //             allDeletedPaths.push({
-                    //                 deletePolyline: currentPolyline,
-                    //                 deletedPath: [p]
-                    //             })
-                    //         }
-                    //         console.log(allDeletedPaths)
-                    //     }
-                    // }
-
-
-
-
                     //delete polyline
                     if (e.key == "Delete") {
                         allDeletedPolylines.push(currentPolyline);
@@ -450,6 +449,23 @@ function TrafficMap() {
                 }
                 addMarkerOnPolyline(polylineImage, currentPolyline);
             }
+
+            $("#polyline-distance-input #set-distance-btn").off("click").on("click", function () {
+                let distance = +$("#distance-input").val();
+                console.log(distance);
+                if (distance) {
+                    if (distance > 0 && distance < 31) {
+                        setDistanceFieldError(false);
+                        polylineMarkerDistance = distance;
+                        addMarkerOnPolyline(polylineImage, currentPolyline)
+                    } else {
+                        setDistanceFieldError(true);
+                    }
+                }else{
+                    setDistanceFieldError(true);
+                }
+
+            });
         }
         else if ($(".right-sidebar-content img.sign-img.active")?.length > 0 || copiedCustomMarkerElement) {
             //adding marker
@@ -470,16 +486,20 @@ function TrafficMap() {
 
             markerView.addListener("click", ({ domEvent, latLng }) => {
                 const { target } = domEvent;
+                console.log(target)
                 let $marker = $(target).parents(".custom-marker");
                 highlightMarker($marker);
                 console.log(markerView)
                 allPolylines.forEach((pl) => pl.setEditable(false));
-                if ($(target).hasClass("marker-delete-btn")) {
+                if ($(target).hasClass("marker-delete-btn") || $(target).closest(".delete-icon").length > 0) {
                     allDeletedMarkers.push(markerView);
                     dispatch(removeMarker(markerView));
 
                     markerView.map = null;
                     $(".right-sidebar-content img.sign-img").removeClass("active");
+                }
+                else if ($(target).closest(".edit-icon").length > 0) {
+                    alert("edit clicked");
                 }
 
 
@@ -542,6 +562,17 @@ function TrafficMap() {
         }
 
     }
+    // const [autocomplete, setAutocomplete] = useState(null)
+
+    const onAutocompleteLoad = (ac) => {
+        autocomplete = ac
+    }
+    const handlePlaceChanged = () => {
+        console.log(autocomplete?.getPlace());
+        let location = autocomplete?.getPlace()?.geometry?.location;
+        map.setCenter(location)
+        // map.panTo(location)
+    }
 
     // useEffect(()=>{
     //     $("#undo-btn").off("click").on("click", function () {
@@ -551,9 +582,50 @@ function TrafficMap() {
     //         document.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'y', 'ctrlKey': true }));
     //     });
     // },[]);
+    const saveDataToLocalStore = () => {
+        const data = allMarkers.map((m) => ({
+            imageId: m.element.querySelector(".custom-marker").getAttribute("imageId"),
+            imageSrc: m.element.querySelector("#marker-img").getAttribute("src"),
+            position: { lat: m.position.lat, lng: m.position.lng }
+        }));
+        console.log(data);
+        localStorage.setItem("markerData", JSON.stringify(data));
+    }
+    // useEffect(()=>{
+    //    setTimeout(()=>{
+    //     const data =JSON.parse(localStorage.getItem("markerData"));
+    //     data?.forEach(marker=>{
+    //         const customHtmlElement = document.createElement("div");
 
+    //         customHtmlElement.className = "custom-marker";
+
+    //             customHtmlElement.setAttribute("imageId", marker.imageId);
+    //             customHtmlElement.innerHTML = `<div class="map-img-container" >
+    //                         <img id="marker-img" src="${marker.imageSrc}"  alt="image ${marker.imageId}"/>
+    //                         <button class="marker-delete-btn" data-image-id="${marker.imageId}">X</button>
+    //                     </div>`;
+
+    //         const markerView = new window.google.maps.marker.AdvancedMarkerView({
+    //             map,
+    //             position: marker.position,
+    //             content: customHtmlElement,
+    //             draggable: true
+    //         });
+    //     })
+
+    //    },10)
+    // },[map])
+    console.log(distanceFieldError)
     return isLoaded ? (
-        <>
+        <Box position="relative">
+            {/* <button onClick={saveDataToLocalStore}>Save</button> */}
+            {/* <Box
+                id="search-map-input"
+                className="controls"
+                type="text"
+                placeholder="Search..."
+            /> */}
+            <PolylineDistanceMapTopInput distanceFieldError={distanceFieldError} />
             <GoogleMap
                 id='traffic-map'
                 center={center}
@@ -561,13 +633,40 @@ function TrafficMap() {
                 onLoad={onLoad}
                 onUnmount={onUnmount}
                 onClick={handleMapClick}
-                options={{ mapId: "891007a81bf3432e", mapTypeId: "satellite" }}
+                options={{ mapId: "891007a81bf3432e", mapTypeId: "satellite",mapTypeControl: false, }}
             >
+                <Box sx={{ "& .pac-target-input": { top: "10px" } }}>
+                    <Autocomplete
+                        onLoad={onAutocompleteLoad}
+                        onPlaceChanged={handlePlaceChanged}
+                    >
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            style={{
+                                boxSizing: `border-box`,
+                                border: `1px solid transparent`,
+                                width: `240px`,
+                                height: `32px`,
+                                padding: `0 12px`,
+                                borderRadius: `3px`,
+                                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+                                fontSize: `14px`,
+                                outline: `none`,
+                                textOverflow: `ellipses`,
+                                position: "absolute",
+                                left: "10px",
+                                top:"20px"
+                            }}
+                        />
+                    </Autocomplete>
+
+                </Box>
                 { /* Child components, such as markers, info windows, etc. */}
                 {/* <KmlLayer url="https://e762c6ab-5e8e-4d5f-825c-f5add6d6c27f.usrfiles.com/ugd/e762c6_f150ef60ff424ef3a8636a1093fb45d3.kml" /> */}
                 <></>
             </GoogleMap>
-        </>
+        </Box>
     ) : <></>
 }
 

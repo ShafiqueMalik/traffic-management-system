@@ -23,14 +23,14 @@ const RightSidebar = () => {
             dispatch(setCopiedMarkerElement(null));
         });
     }, []);
-    const undoRedoHandler = (action: string) => {
-        if (action === "undo") {
-            document.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'z', 'ctrlKey': true }));
+    // const undoRedoHandler = (action: string) => {
+    //     if (action === "undo") {
+    //         document.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'z', 'ctrlKey': true }));
 
-        } else {
-            document.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'y', 'ctrlKey': true }));
-        }
-    }
+    //     } else {
+    //         document.dispatchEvent(new KeyboardEvent('keydown', { 'key': 'y', 'ctrlKey': true }));
+    //     }
+    // }
     return (
         <aside className="right-sidebar">
             <div className="right-sidebar-content">
@@ -54,12 +54,12 @@ const RightSidebar = () => {
                 </div> */}
 
                 <ButtonGroup variant="outlined" aria-label="outlined primary button group">
-                    <Button aria-label="Undo" onClick={() => undoRedoHandler("undo")} id="undo-btn" color="primary">
+                    {/* <Button aria-label="Undo" onClick={() => undoRedoHandler("undo")} id="undo-btn" color="primary">
                         <UndoIcon />
                     </Button>
                     <Button aria-label="Redo" onClick={() => undoRedoHandler("redo")} id="redo-btn" color="primary">
                         <RedoIcon />
-                    </Button>
+                    </Button> */}
 
                 </ButtonGroup>
             </div>
