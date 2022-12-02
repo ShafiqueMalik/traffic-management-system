@@ -34,7 +34,6 @@ const MapPage = () => {
                     <MapPageRightSidebar/>
                     {/* <MapRightSidebarVerticalTabs/> */}
                     <RightSidebar />
-                    {/* <RightSidebarTest /> */}
                 </Grid>
             </Grid>
         </Box>

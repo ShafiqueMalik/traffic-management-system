@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Button, Stack, TextField } from '@mui/material';
 
-const PolylineDistanceMapTopInput = ({distanceFieldError}:any) => {
+const PolylineDistanceMapTopInput = ({ distanceFieldError }: any) => {
   return (
     <Box id="polyline-distance-input" sx={{
       position: "absolute",
@@ -16,13 +16,14 @@ const PolylineDistanceMapTopInput = ({distanceFieldError}:any) => {
     }}>
       <Stack direction="row" gap="5px">
         <TextField id="distance-input"
-        onKeyDown={(e)=>{
-          if(e.key==="."){
-            e.preventDefault()
-          }
-            
-        }}
-        error={distanceFieldError} type="number"
+          onKeyDown={(e) => {
+            console.log(e)
+            if (e.key === ".") {
+              e.preventDefault()
+            }
+          }}
+          placeholder="1m to 30m"
+          error={distanceFieldError} type="number"
           InputProps={{
             inputProps: {
               max: 30, min: 1
@@ -30,7 +31,7 @@ const PolylineDistanceMapTopInput = ({distanceFieldError}:any) => {
           }}
           label="Distance in meters..."
           size='small' variant="outlined"
-          sx={{width:"160px","& input":{fontSize:"14px"},"& .MuiFormLabel-root":{fontSize:"14px"}}}
+          sx={{ width: "160px", "& input": { fontSize: "14px" }, "& .MuiFormLabel-root": { fontSize: "14px" } }}
         />
         <Button id="set-distance-btn" variant="contained" size="small">Set</Button>
       </Stack>

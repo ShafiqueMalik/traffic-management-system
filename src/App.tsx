@@ -1,10 +1,8 @@
 import TrafficMap from 'components/TrafficMap/TrafficMap';
-import TrafficMapTest from 'components/TrafficMapTest/TrafficMapTest';
 import React, { useCallback, useEffect } from 'react';
 import { Container, Grid, Typography, Box, Stack, Toolbar, AppBar, CssBaseline, IconButton } from "@mui/material"
 import RightSidebar from 'components/RightSidebar/RightSidebar';
-import RightSidebarTest from 'components/RightSidebarTest/RightSidebarTest';
-import { setAllMarkers, removeMarker, setSelectedImage, setActiveImageId, setActiveMarkerId } from 'app/slices/mapSliceTest';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import Avatar from '@mui/material/Avatar';

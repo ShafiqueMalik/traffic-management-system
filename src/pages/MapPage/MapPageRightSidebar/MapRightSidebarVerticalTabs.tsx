@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import CustomAccordion from 'components/CustomAccordion/CustomAccordion';
@@ -8,13 +9,22 @@ import MoreIcon from '@mui/icons-material/More';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import LayersIcon from '@mui/icons-material/Layers';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
 import RouteIcon from '@mui/icons-material/Route';
 import AddRoadIcon from '@mui/icons-material/AddRoad';
 import SpeakerNotesIcon from '@mui/icons-material/SpeakerNotes';
-
-
+import { AiOutlineProject } from "react-icons/ai"
+import { SlLayers } from "react-icons/sl"
+import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
+import { TfiBlackboard } from "react-icons/tfi"
+import { GiPathDistance,GiBlackBook } from "react-icons/gi";
+import { FaRoad, FaChessBoard,FaRegObjectGroup } from "react-icons/fa";
+import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
+import icons from "assets/icons"
+import DescriptionIcon from '@mui/icons-material/Description';
+import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
+import { GoChecklist } from "react-icons/go";
+import SettingsIcon from '@mui/icons-material/Settings';
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -68,12 +78,42 @@ export default function MapRightSidebarVerticalTabs() {
                 sx={{
                     bgcolor: "#cccccc", borderColor: 'divider', width: "50px",
                     "& .MuiTabs-indicator": { display: "none" },
-                    "& .MuiTab-root": { p: 0, minWidth: "50px!important" }
+                    "& .MuiTab-root": { p: 0, minWidth: "50px!important", minHeight: "40px" },
+                    "& .MuiTab-root svg": { fontSize: "22px" },
+                    "& .divider": {
+                        borderBottom: "1px solid",
+                        borderColor: "divider"
+                    },
+                    "& .MuiTab-root.Mui-selected": {
+                       bgcolor:"#FFC001",
+                       color:"#ffffff"
+                    }
                 }}
             >
-                <Tab icon={<MoreIcon />}  {...a11yProps(0)} />
-                <Tab icon={<LibraryAddCheckIcon />}  {...a11yProps(1)} />
-                <Tab icon={<LayersIcon />}  {...a11yProps(2)} />
+                <Tab icon={<AiOutlineProject />}  {...a11yProps(0)} />
+                <Tab className="divider" icon={<LibraryAddCheckIcon />}  {...a11yProps(1)} />
+
+
+
+                <Tab icon={<SlLayers />}  {...a11yProps(2)} />
+                <Tab className="divider" icon={<FaRegObjectGroup />}  {...a11yProps(3)} />
+
+
+                <Tab icon={<CleaningServicesIcon />}  {...a11yProps(4)} />
+                <Tab icon={<TfiBlackboard />}  {...a11yProps(5)} />
+                <Tab icon={<GiPathDistance />}  {...a11yProps(6)} />
+                <Tab icon={<FaRoad />}  {...a11yProps(7)} />
+                <Tab className="divider" icon={<ChangeHistoryIcon />}  {...a11yProps(8)} />
+
+                <Tab icon={<GiBlackBook />}  {...a11yProps(9)} />
+                <Tab icon={<DescriptionIcon />}  {...a11yProps(10)} />
+                <Tab icon={<FaChessBoard />}  {...a11yProps(11)} />
+                <Tab className="divider" icon={<ThumbsUpDownIcon />}  {...a11yProps(12)} />
+
+                <Tab icon={<GoChecklist />}  {...a11yProps(13)} />
+                <Tab icon={<SettingsIcon />}  {...a11yProps(14)} />
+
+
             </Tabs>
             <Box sx={{ flex: 1 }}>
                 <TabPanel value={value} index={0}>
@@ -82,14 +122,20 @@ export default function MapRightSidebarVerticalTabs() {
                     </Box>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                  <Box sx={{bgcolor:"purple",color:"white"}}>
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corporis beatae mollitia tempore officiis illo! Inventore eos culpa distinctio veritatis ullam reprehenderit obcaecati cum numquam debitis molestias nostrum recusandae delectus odit fuga, consectetur, quia velit eligendi pariatur nulla vero facilis autem consequuntur repellendus? Sit cum dignissimos dicta deserunt consequuntur nihil quod!
-                  </Box>
+                    <Box sx={{ bgcolor: "purple", color: "white", height: "400px" }}>
+                    </Box>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                <Box sx={{bgcolor:"orange",color:"white"}}>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate corrupti esse, recusandae nobis excepturi odit modi, cum provident, perspiciatis cumque atque. Officiis id consequatur officia, saepe perferendis reiciendis voluptatem dolorem, repellendus sapiente quis asperiores culpa adipisci, quod sequi ab! Quam saepe, est dolorem hic iste a quas. Repudiandae, iusto placeat.
-                  </Box>
+                    <Box sx={{ bgcolor: "orange", color: "white", height: "400px" }}>
+                    </Box>
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    <Box sx={{ bgcolor: "brown", color: "white", height: "400px" }}>
+                    </Box>
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                    <Box sx={{ bgcolor: "blue", color: "white", height: "400px" }}>
+                    </Box>
                 </TabPanel>
             </Box>
         </Box>

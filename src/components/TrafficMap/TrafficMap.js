@@ -642,7 +642,7 @@ function TrafficMap() {
                     >
                         <input
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Enter Location"
                             style={{
                                 boxSizing: `border-box`,
                                 border: `1px solid transparent`,

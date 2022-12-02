@@ -175,21 +175,39 @@ export default function CustomAccordion() {
                     </FormControl>
 
 
-                    <Box sx={{ borderBottom: 1, mt: 2, borderColor: 'divider', position: "relative" }}>
+                    <Box sx={{  mt: 2, borderColor: 'divider', position: "relative" }}>
                         <Tabs value={tabFilterValue}
-                            sx={{ minHeight: "30px !important", "& .MuiTab-root": { minHeight: "30px" } }}
+                            sx={{ minHeight: "30px !important", 
+                            "& .MuiTab-root": { minHeight: "30px" },
+                            "& .MuiTab-root:not(:first-child)":{flex:1},
+                            "& .MuiTab-root:not(:first-child) .close-icon":{
+                                position:"absolute",
+                                top:0,
+                                right:0,
+                                fontSize:"18px",
+                                display:"none"
+                            },
+                            "& .MuiTab-root.Mui-selected .close-icon":{
+                                display:"block"
+                            },
+                            "& .MuiTab-root.Mui-selected":{
+                                bgcolor:"#cccccc"
+                            },
+                            "& .MuiTab-root:not(:first-child):not(:last-child)":{
+                                borderRight:"1px solid #cccccc"
+                            } }}
                             onChange={handleTabChange} aria-label="filter tab">
-                            <Tab label="" sx={{ width: 0, height: 0, minWidth: 0, p: 0 }} />
-                            <Tab label="around" sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
-                            <Tab label="past" sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
-                            <Tab label="through" sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
+                            <Tab label="" sx={{ width: 0, height: 0, minWidth: 0, p: 0 }}/>
+                            <Tab label="around"  icon={<CloseIcon onClick={() => setTabFilterValue(0)} color='error' className="close-icon"/>} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
+                            <Tab label="past"   icon={<CloseIcon onClick={() => setTabFilterValue(0)}  color='error' className="close-icon"/>} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
+                            <Tab label="through"   icon={<CloseIcon onClick={() => setTabFilterValue(0)}  color='error' className="close-icon"/>} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
                         </Tabs>
-                        {tabFilterValue !== 0 && <IconButton onClick={() => setTabFilterValue(0)}
+                        {/* {tabFilterValue !== 0 && <IconButton onClick={() => setTabFilterValue(0)}
                             color="error" sx={{ position: "absolute", right: "-13px", top: "-6px" }}>
                             <CloseIcon />
-                        </IconButton>}
+                        </IconButton>} */}
                     </Box>
-                    <Stack direction="row" mt={2} flexWrap="wrap" gap="5px">
+                    <Stack direction="row" mt={2} flexWrap="nowrap" gap="4px">
                         {/* <List component="nav" aria-label="main mailbox folders">
                             <ListItemButton
                                 // selected={selectedIndex === 0}

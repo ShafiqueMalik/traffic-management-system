@@ -13,8 +13,8 @@ const SpeedButton = ({children,onClick,selectedIndex,index}:SpeedButtonProps) =>
     <IconButton className={`${selectedIndex!==undefined && selectedIndex === index?"active":""}`}  onClick={()=>onClick?.()} sx={{
         padding: 0,
         fontSize: "12px",
-        width: "25px",
-        height: "25px",
+        width: "26px",
+        height: "26px",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
