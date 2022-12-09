@@ -2,11 +2,15 @@ import React from 'react'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { Box, FormControl } from '@mui/material';
 
-const SearchFieldRounded = () => {
+type SearchFieldRoundedProps = {
+    type?:string,
+    placeholder?:string
+}
+const SearchFieldRounded = ({type="text",placeholder}:SearchFieldRoundedProps) => {
     return (
         <Box sx={{width:"100%"}}>
-            <Box component="input" type="text"
-            placeholder='Search Project...'
+            <Box component="input" type={type}
+            placeholder={placeholder}
                 sx={{
                     bgcolor: "#4F4F4F", outline: "none",
                     borderRadius: 100,

@@ -27,7 +27,7 @@ const MapPage = () => {
             <MapPageActionsBar/>
             <Grid container>
                 <Grid item xs>
-                    <TrafficMap />
+                    {/* <TrafficMap /> */}
                     {/* <TrafficMapTest /> */}
                 </Grid>
                 <Grid item sx={{width:"350px"}} pl="0!important">

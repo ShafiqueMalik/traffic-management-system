@@ -8,11 +8,14 @@ import $ from 'jquery';
 
 
 import "./TrafficMap.scss"
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { Stack } from '@mui/system';
 import PolylineDistanceMapTopInput from './PolylineDistanceMapTopInput/PolylineDistanceMapTopInput';
 
-
+import logoWhite100 from "assets/images/logo-white100.png";
+import WhiteLogo from 'components/WhiteLogo/WhiteLogo';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
+import AutocompleteRoundedField from 'components/AutocompleteRoundedField/AutocompleteRoundedField';
 const center = { lat: -25.363, lng: 131.044 };
 let allDeletedMarkers = [];
 let allUndoMarkers = [];
@@ -25,7 +28,6 @@ var landmarks = [];
 let polylineImage;
 let allUndoPolylines = [];
 let allDeletedPaths = [];
-let autocomplete = null;
 let polylineMarkerDistance = 2000;
 
 
@@ -461,7 +463,7 @@ function TrafficMap() {
                     } else {
                         setDistanceFieldError(true);
                     }
-                }else{
+                } else {
                     setDistanceFieldError(true);
                 }
 
@@ -562,17 +564,7 @@ function TrafficMap() {
         }
 
     }
-    // const [autocomplete, setAutocomplete] = useState(null)
 
-    const onAutocompleteLoad = (ac) => {
-        autocomplete = ac
-    }
-    const handlePlaceChanged = () => {
-        console.log(autocomplete?.getPlace());
-        let location = autocomplete?.getPlace()?.geometry?.location;
-        map.setCenter(location)
-        // map.panTo(location)
-    }
 
     // useEffect(()=>{
     //     $("#undo-btn").off("click").on("click", function () {
@@ -625,6 +617,28 @@ function TrafficMap() {
                 type="text"
                 placeholder="Search..."
             /> */}
+            {/* <Box component="img" src={logoWhite100} alt="logo white 100"
+                sx={{
+                    position: "absolute",
+                    top: "20px",
+                    right: "100px",
+                    width: "185px",
+                    height: "40px",
+                    zIndex: 1,
+                    filter: "drop-shadow(0px 0px 3px rgba(0,0,0,0.5))"
+                }}
+            /> */}
+            <WhiteLogo
+                sx={{
+                    position: "absolute",
+                    top: "20px",
+                    right: "70px",
+                    width: "185px",
+                    height: "40px",
+                    zIndex: 1,
+                    filter: "drop-shadow(0px 0px 3px rgba(0,0,0,0.5))"
+                }}
+            />
             <PolylineDistanceMapTopInput distanceFieldError={distanceFieldError} />
             <GoogleMap
                 id='traffic-map'
@@ -633,34 +647,15 @@ function TrafficMap() {
                 onLoad={onLoad}
                 onUnmount={onUnmount}
                 onClick={handleMapClick}
-                options={{ mapId: "891007a81bf3432e", mapTypeId: "satellite",mapTypeControl: false, }}
+                options={{ mapId: "891007a81bf3432e", mapTypeId: "satellite", mapTypeControl: false, }}
             >
-                <Box sx={{ "& .pac-target-input": { top: "10px" } }}>
-                    <Autocomplete
-                        onLoad={onAutocompleteLoad}
-                        onPlaceChanged={handlePlaceChanged}
-                    >
-                        <input
-                            type="text"
-                            placeholder="Enter Location"
-                            style={{
-                                boxSizing: `border-box`,
-                                border: `1px solid transparent`,
-                                width: `240px`,
-                                height: `32px`,
-                                padding: `0 12px`,
-                                borderRadius: `3px`,
-                                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                                fontSize: `14px`,
-                                outline: `none`,
-                                textOverflow: `ellipses`,
-                                position: "absolute",
-                                left: "10px",
-                                top:"20px"
-                            }}
-                        />
-                    </Autocomplete>
-
+                <Box className="autocomplete-input-container" sx={{
+                    position: "absolute",
+                    top: "20px",
+                    left: "15px",
+                    "& .pac-target-input": { top: "15px" }
+                }}>
+                    <AutocompleteRoundedField map={map} />
                 </Box>
                 { /* Child components, such as markers, info windows, etc. */}
                 {/* <KmlLayer url="https://e762c6ab-5e8e-4d5f-825c-f5add6d6c27f.usrfiles.com/ugd/e762c6_f150ef60ff424ef3a8636a1093fb45d3.kml" /> */}

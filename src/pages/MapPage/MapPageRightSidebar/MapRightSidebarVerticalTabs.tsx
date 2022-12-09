@@ -115,7 +115,12 @@ export default function MapRightSidebarVerticalTabs() {
 
 
             </Tabs>
-            <Box sx={{ flex: 1 }}>
+            <Box className="right-vertical-tabs-panel-container"
+             sx={{ flex: 1,
+                position: "relative",
+                top: "136px",
+            }}
+            >
                 <TabPanel value={value} index={0}>
                     <Box bgcolor="#E3E3E3" sx={{ flex: 1, p: "0" }}>
                         <CustomAccordion />

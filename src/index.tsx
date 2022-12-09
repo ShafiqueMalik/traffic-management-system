@@ -22,7 +22,7 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     dark: PaletteColorOptions;
   }
-  
+
 }
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
@@ -35,13 +35,22 @@ declare module '@mui/material/AppBar' {
   }
 }
 const { palette } = createTheme();
+
+const red = "red";
+const offBlack = "#444";
+const white = "white";
+
 const theme = createTheme({
   palette: {
+    common: {
+      primary:"#FFC001",
+      icon:"#646464",
+    },
     // Use this code if you want to use an arbitrary color
     dark: palette.augmentColor({
       color: {
         main: "#212121",
-        contrastText:"#ffffff"
+        contrastText: "#ffffff"
       }
     })
   }

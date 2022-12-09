@@ -75,7 +75,7 @@ function App() {
 
       >
         <Toolbar sx={{ minHeight: "50px !important", justifyContent: "space-between" }}>
-          <IconButton onClick={toggleLeftNavbarMenu}><MenuIcon sx={{ fill: "#ffffff" }} /></IconButton>
+          <IconButton onClick={toggleLeftNavbarMenu}><MenuIcon sx={{ fill: "#646464" }} /></IconButton>
 
           <Box component="img" src={icons.logoYellow} alt="connector logo" sx={{ width: 150, height: 45 }} />
 

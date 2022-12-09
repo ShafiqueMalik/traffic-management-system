@@ -20,6 +20,8 @@ import {
     InputLabel, Select, Tabs, Tab, List, ListItemButton
 } from '@mui/material'
 import trafficSigns from "assets/traffic-signs";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleFilterAccordion } from 'app/slices/globalSlice';
 
 
 
@@ -67,10 +69,30 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function CustomAccordion() {
-    const [expanded, setExpanded] = React.useState<string | false>('panel1');
+    const { showSignCaption, showFilterAccordion, showAllAccordion } = useSelector((state: any) => state.global)
+    const dispatch = useDispatch();
 
-    const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-        setExpanded(newExpanded ? panel : false);
+    const [filterBySignPanel, setFilterBySignsPanel] = React.useState(false);
+    const [signsPanel, setSignsPanel] = React.useState(false);
+    const [conesPanel, setConesPanel] = React.useState(false);
+    const [devicesPanel, setDevicesPanel] = React.useState(false);
+
+    const allPanelSetter: any = {
+        1: setFilterBySignsPanel,
+        2: setSignsPanel,
+        3: setConesPanel,
+        4: setDevicesPanel,
+    }
+
+    //this will run useEffect on update but not on initial render
+    const isInitialMount = React.useRef(true);
+
+
+    const handleAccordionChange = (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+        if(panel===1){
+            dispatch(toggleFilterAccordion());
+        }
+        allPanelSetter[panel]((prev: any) => !prev);
     };
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -110,10 +132,34 @@ export default function CustomAccordion() {
     const selectSpeedButtonIndex = (idx: number) => {
         setSelectedSpeedIndex(idx)
     }
+
+    React.useEffect(() => {
+        setFilterBySignsPanel(showFilterAccordion)
+    }, [showFilterAccordion]);
+
+    React.useEffect(() => {
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            Object.entries(allPanelSetter).forEach(([key, panelSetter]:[any,any]) => {
+                if(key==="1"){
+                    dispatch(toggleFilterAccordion(showAllAccordion));
+                }else{
+                    if(showAllAccordion){
+                        panelSetter(true);
+                    }else{
+                        panelSetter(false);
+                    }
+                }
+            });
+            
+        }
+    }, [showAllAccordion])
+
     return (
         <Box className="accordion-container">
-            <Accordion expanded={expanded === 'panel1'} onChange={handleAccordionChange('panel1')}>
-                <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+            <Accordion expanded={filterBySignPanel} onChange={handleAccordionChange(1)}>
+                <AccordionSummary aria-controls="filterBySignPaneld-content" id="filterBySignPaneld-header">
                     <Typography>Filter By Signs</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -175,32 +221,34 @@ export default function CustomAccordion() {
                     </FormControl>
 
 
-                    <Box sx={{  mt: 2, borderColor: 'divider', position: "relative" }}>
+                    <Box sx={{ mt: 2, borderColor: 'divider', position: "relative" }}>
                         <Tabs value={tabFilterValue}
-                            sx={{ minHeight: "30px !important", 
-                            "& .MuiTab-root": { minHeight: "30px" },
-                            "& .MuiTab-root:not(:first-child)":{flex:1},
-                            "& .MuiTab-root:not(:first-child) .close-icon":{
-                                position:"absolute",
-                                top:0,
-                                right:0,
-                                fontSize:"18px",
-                                display:"none"
-                            },
-                            "& .MuiTab-root.Mui-selected .close-icon":{
-                                display:"block"
-                            },
-                            "& .MuiTab-root.Mui-selected":{
-                                bgcolor:"#cccccc"
-                            },
-                            "& .MuiTab-root:not(:first-child):not(:last-child)":{
-                                borderRight:"1px solid #cccccc"
-                            } }}
+                            sx={{
+                                minHeight: "30px !important",
+                                "& .MuiTab-root": { minHeight: "30px" },
+                                "& .MuiTab-root:not(:first-child)": { flex: 1 },
+                                "& .MuiTab-root:not(:first-child) .close-icon": {
+                                    position: "absolute",
+                                    top: 0,
+                                    right: 0,
+                                    fontSize: "18px",
+                                    display: "none"
+                                },
+                                "& .MuiTab-root.Mui-selected .close-icon": {
+                                    display: "block"
+                                },
+                                "& .MuiTab-root.Mui-selected": {
+                                    bgcolor: "#cccccc"
+                                },
+                                "& .MuiTab-root:not(:first-child):not(:last-child)": {
+                                    borderRight: "1px solid #cccccc"
+                                }
+                            }}
                             onChange={handleTabChange} aria-label="filter tab">
-                            <Tab label="" sx={{ width: 0, height: 0, minWidth: 0, p: 0 }}/>
-                            <Tab label="around"  icon={<CloseIcon onClick={() => setTabFilterValue(0)} color='error' className="close-icon"/>} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
-                            <Tab label="past"   icon={<CloseIcon onClick={() => setTabFilterValue(0)}  color='error' className="close-icon"/>} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
-                            <Tab label="through"   icon={<CloseIcon onClick={() => setTabFilterValue(0)}  color='error' className="close-icon"/>} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
+                            <Tab label="" sx={{ width: 0, height: 0, minWidth: 0, p: 0 }} />
+                            <Tab label="around" icon={<CloseIcon onClick={() => setTabFilterValue(0)} color='error' className="close-icon" />} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
+                            <Tab label="past" icon={<CloseIcon onClick={() => setTabFilterValue(0)} color='error' className="close-icon" />} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
+                            <Tab label="through" icon={<CloseIcon onClick={() => setTabFilterValue(0)} color='error' className="close-icon" />} sx={{ fontSize: "12px", p: 0, minWidth: "65px" }} />
                         </Tabs>
                         {/* {tabFilterValue !== 0 && <IconButton onClick={() => setTabFilterValue(0)}
                             color="error" sx={{ position: "absolute", right: "-13px", top: "-6px" }}>
@@ -238,21 +286,21 @@ export default function CustomAccordion() {
                         <SpeedButton>90</SpeedButton>
                         <SpeedButton>100</SpeedButton>
                         <SpeedButton>110</SpeedButton> */}
-                        <SpeedButton onClick={()=>setSelectedSpeedIndex(-1)}>
+                        <SpeedButton onClick={() => setSelectedSpeedIndex(-1)}>
                             <Box sx={{ width: "80%", height: "4px", bgcolor: "#3f3f3f", transform: "rotate(-45deg)" }} />
                         </SpeedButton>
                     </Stack>
                 </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel2'} onChange={handleAccordionChange('panel2')}>
-                <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+            <Accordion expanded={signsPanel} onChange={handleAccordionChange(2)}>
+                <AccordionSummary aria-controls="signsPaneld-content" id="signsPaneld-header">
                     <Typography>Signs</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Box sx={{
                         display: "grid",
                         gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                        "& img":{maxWidth:"100%",height:"auto"},
+                        "& img": { maxWidth: "100%", height: "auto" },
                         gap: "5px"
                     }}>
                         <Box component="img" src={trafficSigns.speed80Sign} alt="speed 80"
@@ -278,15 +326,15 @@ export default function CustomAccordion() {
                     </Box>
                 </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel3'} onChange={handleAccordionChange('panel3')}>
-                <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+            <Accordion expanded={conesPanel} onChange={handleAccordionChange(3)}>
+                <AccordionSummary aria-controls="conesPaneld-content" id="conesPaneld-header">
                     <Typography>Cones</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Box sx={{
                         display: "grid",
                         gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                        "& img":{maxWidth:"100%",height:"auto"},
+                        "& img": { maxWidth: "100%", height: "auto" },
                         gap: "5px"
                     }}>
                         <Box component="img" src={trafficSigns.cone} alt="speed 80"
@@ -312,15 +360,15 @@ export default function CustomAccordion() {
                     </Box>
                 </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel4'} onChange={handleAccordionChange('panel4')}>
-                <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+            <Accordion expanded={devicesPanel} onChange={handleAccordionChange(4)}>
+                <AccordionSummary aria-controls="conesPaneld-content" id="conesPaneld-header">
                     <Typography>Devices</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Box sx={{
                         display: "grid",
                         gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                        "& img":{maxWidth:"100%",height:"auto"},
+                        "& img": { maxWidth: "100%", height: "auto" },
                         gap: "5px"
                     }}>
                         <Box component="img" src={trafficSigns.device} alt="speed 80"

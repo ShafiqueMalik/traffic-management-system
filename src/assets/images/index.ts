@@ -2,7 +2,7 @@ import image1 from "./1.jpg";
 import image2 from "./2.jpg";
 import image3 from "./3.jpg";
 import image4 from "./4.jpg";
-import image5 from "./1.jpg";
+import logoWhite100 from "./logo-white100.png";
 import image6 from "./1.jpg";
 // export default {
 //     image1,

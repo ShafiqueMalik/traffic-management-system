@@ -76,7 +76,9 @@ function MapPageActionsBar() {
             sx={{
                 bgcolor: "#3C3C3C",
                 width: `calc(100% - ${drawerWidth}px)`,
-                ml: `${drawerWidth}px`, height: "50px", mt: `${50}px`
+                ml: `${drawerWidth}px`, height: "50px", mt: `${50}px`,
+                "& svg":{fill:"#646464"},
+                "& .MuiIconButton-root:hover svg":{fill:"#ffffff"}
             }}>
             <Container maxWidth="xl" sx={{ height: "100%" }}>
                 <Toolbar disableGutters sx={{ maxHeight: "50px", minHeight: "50px !important" }}>
