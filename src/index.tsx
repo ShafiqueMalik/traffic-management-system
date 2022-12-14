@@ -6,55 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import store from './app/store'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from "react-router-dom";
-import {
-  createTheme,
-  PaletteColorOptions,
-  ThemeProvider,
-} from '@mui/material/styles';
+import theme from "./theme";
+import {ThemeProvider} from '@mui/material/styles';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-declare module '@mui/material/styles' {
-  interface Palette {
-    dark: PaletteColorOptions;
-  }
-  interface PaletteOptions {
-    dark: PaletteColorOptions;
-  }
-
-}
-declare module '@mui/material/Button' {
-  interface ButtonPropsColorOverrides {
-    dark: true
-  }
-}
-declare module '@mui/material/AppBar' {
-  interface AppBarPropsColorOverrides {
-    dark: true
-  }
-}
-const { palette } = createTheme();
-
-const red = "red";
-const offBlack = "#444";
-const white = "white";
-
-const theme = createTheme({
-  palette: {
-    common: {
-      primary:"#FFC001",
-      icon:"#646464",
-    },
-    // Use this code if you want to use an arbitrary color
-    dark: palette.augmentColor({
-      color: {
-        main: "#212121",
-        contrastText: "#ffffff"
-      }
-    })
-  }
-});
 
 root.render(
   // <React.StrictMode>

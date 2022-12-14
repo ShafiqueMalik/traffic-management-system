@@ -17,14 +17,18 @@ import { AiOutlineProject } from "react-icons/ai"
 import { SlLayers } from "react-icons/sl"
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import { TfiBlackboard } from "react-icons/tfi"
-import { GiPathDistance,GiBlackBook } from "react-icons/gi";
-import { FaRoad, FaChessBoard,FaRegObjectGroup } from "react-icons/fa";
+import { GiPathDistance, GiBlackBook } from "react-icons/gi";
+import { FaRoad, FaChessBoard, FaRegObjectGroup } from "react-icons/fa";
 import ChangeHistoryIcon from '@mui/icons-material/ChangeHistory';
 import icons from "assets/icons"
 import DescriptionIcon from '@mui/icons-material/Description';
 import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 import { GoChecklist } from "react-icons/go";
 import SettingsIcon from '@mui/icons-material/Settings';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import SortableListPanel from './SortableListPanel/SortableListPanel';
+import LegendPanel from './LegendPanel/LegendPanel';
+
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
@@ -35,7 +39,7 @@ function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
     return (
-        <div
+        <Box
             role="tabpanel"
             hidden={value !== index}
             id={`vertical-tabpanel-${index}`}
@@ -47,7 +51,7 @@ function TabPanel(props: TabPanelProps) {
                     {children}
                 </Box>
             )}
-        </div>
+        </Box>
     );
 }
 
@@ -85,8 +89,8 @@ export default function MapRightSidebarVerticalTabs() {
                         borderColor: "divider"
                     },
                     "& .MuiTab-root.Mui-selected": {
-                       bgcolor:"#FFC001",
-                       color:"#ffffff"
+                        bgcolor: "#FFC001",
+                        color: "#ffffff"
                     }
                 }}
             >
@@ -116,10 +120,14 @@ export default function MapRightSidebarVerticalTabs() {
 
             </Tabs>
             <Box className="right-vertical-tabs-panel-container"
-             sx={{ flex: 1,
-                position: "relative",
-                top: "136px",
-            }}
+                sx={{
+                    flex: 1,
+                    position: "relative",
+                    top: "136px",
+                    border: "1px solid",
+                    borderColor: "divider",
+                    width: "300px"
+                }}
             >
                 <TabPanel value={value} index={0}>
                     <Box bgcolor="#E3E3E3" sx={{ flex: 1, p: "0" }}>
@@ -127,20 +135,49 @@ export default function MapRightSidebarVerticalTabs() {
                     </Box>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <Box sx={{ bgcolor: "purple", color: "white", height: "400px" }}>
+                    <Box sx={{ bgcolor: "purple", color: "white", height: "400px", p: "10px" }}>
+
                     </Box>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <Box sx={{ bgcolor: "orange", color: "white", height: "400px" }}>
+                    <Box sx={{p:"10px"}}>
+                        <Typography variant="h6" fontSize="14px">
+                            TRAFFIC GUIDANCE SCHEMES
+                        </Typography>
+                        <List
+                            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                            aria-label="contacts"
+                        >
+                            <ListItem disablePadding sx={{ bgcolor: "#F5F5F5", mb: 1 }}>
+                                <ListItemButton sx={{ py: "5px" }}>
+                                    <ListItemText primary="000000-000000" />
+                                </ListItemButton>
+                            </ListItem>
+                            <ListItem disablePadding sx={{ bgcolor: "#F5F5F5", mb: 1 }}>
+                                <ListItemButton sx={{ py: "5px" }}>
+                                    <ListItemText primary="000000-000000" />
+                                </ListItemButton>
+                            </ListItem>
+                            <ListItem disablePadding sx={{ bgcolor: "#F5F5F5", mb: 1 }}>
+                                <ListItemButton sx={{ py: "5px" }}>
+                                    <ListItemText primary="000000-000000" />
+                                </ListItemButton>
+                            </ListItem>
+                            <ListItem disablePadding sx={{ bgcolor: "#F5F5F5", mb: 1 }}>
+                                <ListItemButton sx={{ py: "5px" }}>
+                                    <ListItemText primary="000000-000000" />
+                                </ListItemButton>
+                            </ListItem>
+
+
+                        </List>
                     </Box>
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    <Box sx={{ bgcolor: "brown", color: "white", height: "400px" }}>
-                    </Box>
+                    <SortableListPanel />
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    <Box sx={{ bgcolor: "blue", color: "white", height: "400px" }}>
-                    </Box>
+                    <LegendPanel/>
                 </TabPanel>
             </Box>
         </Box>

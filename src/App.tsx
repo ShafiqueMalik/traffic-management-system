@@ -24,6 +24,9 @@ import LeftNavbarMenu from 'components/LeftNavbarMenu/LeftNavbarMenu';
 import DashboardPage from 'pages/DashboardPage/DashboardPage';
 
 import icons from "assets/icons";
+import InboxPage from 'pages/InboxPage/InboxPage';
+import AppsPage from 'pages/AppsPage/AppsPage';
+import TasksPage from 'pages/TasksPage/TasksPage';
 
 const drawerWidth = 60;
 function App() {
@@ -71,7 +74,7 @@ function App() {
       <AppBar
         position="fixed"
         sx={{ zIndex: 2000, height: "50px" }}
-      color="dark"
+      color="secondary"
 
       >
         <Toolbar sx={{ minHeight: "50px !important", justifyContent: "space-between" }}>
@@ -147,6 +150,9 @@ function App() {
           <Routes>
             <Route path="/" element={<MapPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/inbox" element={<InboxPage />} />
+            <Route path="/apps" element={<AppsPage />} />
+            <Route path="/tasks" element={<TasksPage />} />
           </Routes>
         </Box>
       </Stack>

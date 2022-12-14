@@ -13,6 +13,8 @@ import TuneIcon from '@mui/icons-material/Tune';
 import CloseIcon from '@mui/icons-material/Close';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import SpeedButton from 'pages/MapPage/MapPageRightSidebar/SpeedButton/SpeedButton';
+
+
 import {
     Avatar, Box, TextField, Typography, Stack,
     Button, Tooltip, IconButton, Menu, MenuItem,
@@ -23,8 +25,9 @@ import trafficSigns from "assets/traffic-signs";
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFilterAccordion } from 'app/slices/globalSlice';
 
-
-
+import { TfiArrowsHorizontal } from "react-icons/tfi"
+import { TbArrowFork } from "react-icons/tb"
+import { BsCircle, BsPentagon } from "react-icons/bs"
 
 
 const Accordion = styled((props: AccordionProps) => (
@@ -76,12 +79,14 @@ export default function CustomAccordion() {
     const [signsPanel, setSignsPanel] = React.useState(false);
     const [conesPanel, setConesPanel] = React.useState(false);
     const [devicesPanel, setDevicesPanel] = React.useState(false);
+    const [dimentionsPanel, setDimentionsPanel] = React.useState(false);
 
     const allPanelSetter: any = {
         1: setFilterBySignsPanel,
         2: setSignsPanel,
         3: setConesPanel,
         4: setDevicesPanel,
+        5: setDimentionsPanel,
     }
 
     //this will run useEffect on update but not on initial render
@@ -89,7 +94,7 @@ export default function CustomAccordion() {
 
 
     const handleAccordionChange = (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-        if(panel===1){
+        if (panel === 1) {
             dispatch(toggleFilterAccordion());
         }
         allPanelSetter[panel]((prev: any) => !prev);
@@ -141,18 +146,18 @@ export default function CustomAccordion() {
         if (isInitialMount.current) {
             isInitialMount.current = false;
         } else {
-            Object.entries(allPanelSetter).forEach(([key, panelSetter]:[any,any]) => {
-                if(key==="1"){
+            Object.entries(allPanelSetter).forEach(([key, panelSetter]: [any, any]) => {
+                if (key === "1") {
                     dispatch(toggleFilterAccordion(showAllAccordion));
-                }else{
-                    if(showAllAccordion){
+                } else {
+                    if (showAllAccordion) {
                         panelSetter(true);
-                    }else{
+                    } else {
                         panelSetter(false);
                     }
                 }
             });
-            
+
         }
     }, [showAllAccordion])
 
@@ -391,6 +396,33 @@ export default function CustomAccordion() {
                         />
                         <Box component="img" src={trafficSigns.device} alt="speed 80"
                         />
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
+
+            <Accordion expanded={dimentionsPanel} onChange={handleAccordionChange(5)}>
+                <AccordionSummary aria-controls="conesPaneld-content" id="conesPaneld-header">
+                    <Typography>Dimenstions</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                    <Box sx={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr 1fr 1fr",
+                        "& img": { maxWidth: "100%", height: "auto" },
+                        gap: "5px"
+                    }}>
+                        <IconButton>
+                            <TfiArrowsHorizontal />
+                        </IconButton>
+                        <IconButton>
+                            <TbArrowFork />
+                        </IconButton>
+                        <IconButton>
+                            <BsCircle />
+                        </IconButton>
+                        <IconButton>
+                            <BsPentagon />
+                        </IconButton>
                     </Box>
                 </AccordionDetails>
             </Accordion>

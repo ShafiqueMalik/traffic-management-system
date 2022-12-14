@@ -10,7 +10,7 @@ const ColorInputField = ({color, setColor,text}:any) => {
     }
     return (
         <Stack>
-        <Box sx={{fontSize:"12px"}}>{text}</Box>
+        <Box sx={{fontSize:"12px",color:"#ffffff"}}>{text}</Box>
         <FormControl>
             {/* <InputLabel id="line-color"
             sx={{color:"#ffffff"}}
@@ -19,6 +19,7 @@ const ColorInputField = ({color, setColor,text}:any) => {
                 id="outlined-adornment-color"
                 placeholder="#123456"
                 value={color}
+                color="primary"
                 onChange={handleColorInputChange}
                 // label="Line Color"
                 sx={{

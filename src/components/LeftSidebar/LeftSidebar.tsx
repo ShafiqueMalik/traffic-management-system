@@ -50,7 +50,7 @@ export const leftSidebarNavigationData = [
     icon: <IoStatsChart />
   }, {
     text: "Task",
-    route: "task",
+    route: "tasks",
     icon: <FaGlobe />
   },
   {
@@ -119,7 +119,7 @@ export default function LeftSidebar() {
                   borderRadius: "50%",
                 }}></Box>}
               </ListItemButton>
-              <ListItemText sx={{ m: 0, visibility: "hidden", color: "#646464", "& span": { fontSize: "10px" } }}>{text}</ListItemText>
+              <ListItemText sx={{ m: 0, visibility: "hidden", color: "icon.main", "& span": { fontSize: "10px" } }}>{text}</ListItemText>
             </ListItem>
           ))}
         </List>
