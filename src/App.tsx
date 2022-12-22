@@ -27,6 +27,7 @@ import icons from "assets/icons";
 import InboxPage from 'pages/InboxPage/InboxPage';
 import AppsPage from 'pages/AppsPage/AppsPage';
 import TasksPage from 'pages/TasksPage/TasksPage';
+import SubLeftSidebar from 'components/LeftSidebar/SubLeftNavbar/SubLeftNavbar';
 
 const drawerWidth = 60;
 function App() {
@@ -143,6 +144,7 @@ function App() {
 
       <Stack direction="row" className='app-content'>
         <LeftSidebar />
+        <SubLeftSidebar/>
         <Box
           component="main"
           sx={{ flexGrow: 1, bgcolor: 'background.default', mt: `${50}px` }}
