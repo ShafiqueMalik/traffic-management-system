@@ -11,7 +11,7 @@ const drawerWidth = 60;
 
 const MapPage = () => {
     return (
-        <Box sx={{mt:"50px"}}>
+        <Box>
             {/* <AppBar
                 position="fixed"
                 color="dark"
@@ -24,14 +24,14 @@ const MapPage = () => {
                     </Typography>
                 </Toolbar>
             </AppBar> */}
-            <MapPageActionsBar/>
             <Grid container>
                 <Grid item xs>
-                    {/* <TrafficMap /> */}
+                    <MapPageActionsBar />
+                    <TrafficMap />
                     {/* <TrafficMapTest /> */}
                 </Grid>
-                <Grid item sx={{width:"350px"}} pl="0!important">
-                    <MapPageRightSidebar/>
+                <Grid item sx={{ width: "350px" }} pl="0!important">
+                    <MapPageRightSidebar />
                     {/* <MapRightSidebarVerticalTabs/> */}
                     <RightSidebar />
                 </Grid>

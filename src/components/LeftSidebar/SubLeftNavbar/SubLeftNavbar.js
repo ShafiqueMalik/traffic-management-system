@@ -21,13 +21,17 @@ import { IconButton, Avatar } from "@mui/material";
 import SmsIcon from '@mui/icons-material/Sms';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
-import { BsConeStriped } from "react-icons/bs";
+import { BsConeStriped,BsBook,BsFileMedical} from "react-icons/bs";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { ReactComponent as ConeIcon } from "assets/icons/traffic-cone.svg";
-import { BsChatLeftTextFill } from "react-icons/bs";
+import { BsChatLeftTextFill ,BsCheck2Square} from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5"
-import { FaGlobe } from "react-icons/fa";
+import { FaGlobe,FaRegFolder} from "react-icons/fa";
+import {FiCheckSquare} from "react-icons/fi";
 import { IoAppsSharp } from "react-icons/io5";
+import {IoSettingsOutline}from "react-icons/io5";
+import {HiOutlineGlobeAlt} from "react-icons/hi"
+import {MdOutlineTrendingUp} from "react-icons/md"
 import LanguageIcon from '@mui/icons-material/Language';
 import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 import TurnSharpRightOutlinedIcon from '@mui/icons-material/TurnSharpRightOutlined';
@@ -35,18 +39,18 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import AssignmentTurnedInOutlinedIcon from '@mui/icons-material/AssignmentTurnedInOutlined';
 export const leftSidebarNavigationData = [
   {
-    text: "Inbox",
-    route: "inbox",
-    icon: <WorkOutlineOutlinedIcon />
+    text: "Detail",
+    route: "project-details",
+    icon: <FaRegFolder />
   },
   {
     text: "Map",
     route: "",
-    icon: <LanguageIcon/>
+    icon: <FaGlobe />
   },  {
     text: "Dashboard",
     route: "dashboard",
-    icon: <TurnSharpRightOutlinedIcon />
+    icon: <MdOutlineTrendingUp />
   }, {
     text: "Task",
     route: "tasks",
@@ -54,9 +58,27 @@ export const leftSidebarNavigationData = [
   },
   {
     text: "Apps",
-    route: "apps",
-    icon: <AssignmentTurnedInOutlinedIcon />
+    route: "list",
+    icon: <BsCheck2Square />
   },
+  {
+    text: "Apps",
+    route: "books",
+    icon: <BsBook />
+  },
+  {
+    text: "Apps",
+    route: "certificates",
+    icon: <BsFileMedical />
+  },
+  {
+    text: "Apps",
+    route: "/settings",
+    icon: <IoSettingsOutline />
+  },
+  
+
+  
 ];
 
 
@@ -97,8 +119,8 @@ export default function SubLeftSidebar() {
         anchor="left"
       >
         <Toolbar sx={{ minHeight: "50px !important" }} />
-        <Divider />
-        <List component={Stack} gap="15px">
+        {/* <Divider /> */}
+        <List component={Stack} gap="10px">
           {leftSidebarNavigationData.map(({ text, route, icon: Icon }) => (
             <ListItem key={text} disablePadding sx={{
               flexDirection: "column",
@@ -109,7 +131,7 @@ export default function SubLeftSidebar() {
               <ListItemButton component={NavLink} to={`${route}`}
                 sx={{
                   "& svg": { fill: "#646464", width: "20px", height: "20px" },
-                  "&.active svg": { fill: "#FFC001" },
+                  "&.active svg": { fill: "#FFC001" ,color: "#FFC001" },
                   "&.active + .MuiListItemText-root": { visibility: "visible", }
                 }}
               >

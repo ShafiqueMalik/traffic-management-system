@@ -21,8 +21,9 @@
                 button {
                     // display: block;
                 }
-                .custom-marker-context-menu{
-                    display: block;
+
+                .custom-marker-context-menu {
+                    display: flex;
                 }
             }
         }
@@ -55,39 +56,52 @@
                 cursor: pointer;
                 display: none;
             }
+
             .custom-marker-context-menu {
                 position: absolute;
-                right: -44px;
+                right: -132px;
                 top: 0;
+                min-width: 130px;
                 /* height: 100px; */
                 display: flex;
                 flex-direction: column;
+                gap:8px;
                 /* width: 100px; */
                 background: white;
-                padding: 10px 8px;
+                padding-block: 10px;
+                padding-left: 3px;
+                padding-right: 18px;
                 border-radius: 8px;
                 box-shadow: 0 0 5px rgb(0 0 0 / 40%);
                 display: none;
                 cursor: pointer;
+
                 & * {
                     line-height: initial;
+                    font-size: 14px;
                 }
-                &-item{
+
+                &-item {
                     // background-color: #ccc;
-                    padding:2px;
+                    padding: 2px;
+                    display: flex;
+                    align-items: center;
+                    gap: 5px;
                     // &:hover{
                     //     background-color: gray;
                     // }
                 }
-                .delete-icon{
-                    transition: all 0.3s ease-in-out;
-                    
-                    svg{
-                        color: #f13e3e;
-                    }
-                    &:hover{
-                        transform: scale(1.1);
-                    }
+
+                .delete-icon {
+                    // transition: all 0.3s ease-in-out;
+
+                    // svg {
+                    //     color: #f13e3e;
+                    // }
+
+                    // &:hover {
+                    //     transform: scale(1.1);
+                    // }
                 }
             }
 
@@ -95,15 +109,16 @@
                 button {
                     // display: block;
                 }
-                .custom-marker-context-menu{
-                    display: block;
+
+                .custom-marker-context-menu {
+                    display: flex;
                 }
             }
 
 
         }
 
-       
+
     }
 
     div[class*="-marker-view"] {

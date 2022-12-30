@@ -28,6 +28,8 @@ import InboxPage from 'pages/InboxPage/InboxPage';
 import AppsPage from 'pages/AppsPage/AppsPage';
 import TasksPage from 'pages/TasksPage/TasksPage';
 import SubLeftSidebar from 'components/LeftSidebar/SubLeftNavbar/SubLeftNavbar';
+import ProjectDetails from 'pages/ProjectDetails/ProjectDetails';
+import LandingPage from 'pages/LandingPage/LandingPage';
 
 const drawerWidth = 60;
 function App() {
@@ -72,7 +74,7 @@ function App() {
     <div className="App">
       <CssBaseline />
       <LeftNavbarMenu open={open} setOpen={setOpen} />
-      <AppBar
+      {/* <AppBar
         position="fixed"
         sx={{ zIndex: 2000, height: "50px" }}
       color="secondary"
@@ -140,19 +142,21 @@ function App() {
             </MenuItem>
           </Menu>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
 
       <Stack direction="row" className='app-content'>
-        <LeftSidebar />
+        <LeftSidebar open={open} setOpen={setOpen}/>
         <SubLeftSidebar/>
         <Box
           component="main"
-          sx={{ flexGrow: 1, bgcolor: 'background.default', mt: `${50}px` }}
+          sx={{ flexGrow: 1, bgcolor: 'background.default' }}
         >
           <Routes>
             <Route path="/" element={<MapPage />} />
+            <Route path="/landing-page" element={<LandingPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/inbox" element={<InboxPage />} />
+            <Route path="/project-details" element={<ProjectDetails />} />
             <Route path="/apps" element={<AppsPage />} />
             <Route path="/tasks" element={<TasksPage />} />
           </Routes>

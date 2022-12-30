@@ -4,6 +4,10 @@ import image3 from "./3.jpg";
 import image4 from "./4.jpg";
 import logoWhite100 from "./logo-white100.png";
 import image6 from "./1.jpg";
+import bannerBg from "./bannerbg.webp";
+
+export {bannerBg}
+
 // export default {
 //     image1,
 //     image2,

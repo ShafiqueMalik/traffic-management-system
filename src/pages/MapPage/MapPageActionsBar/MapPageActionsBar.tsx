@@ -39,6 +39,20 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import ColorInputField from './ColorInputField/ColorInputField';
 
+import {BiCrosshair,BiUndo,BiRedo,BiPointer,BiShareAlt} from "react-icons/bi";
+import {AiOutlineExpand} from "react-icons/ai";
+import {RiRulerLine} from "react-icons/ri";
+
+
+import {FiMousePointer,FiShare2} from "react-icons/fi";
+import {VscSave} from "react-icons/vsc";
+import {HiOutlineDocumentSearch} from "react-icons/hi";
+import {BsFileMedical} from "react-icons/bs";
+import {AiOutlineFileSearch} from "react-icons/ai";
+
+
+
+
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -71,20 +85,22 @@ function MapPageActionsBar() {
     }
 
     return (
-        <AppBar position="fixed"
+        <AppBar position="sticky"
             // color="dark"
             sx={{
                 bgcolor: "#3C3C3C",
-                width: `calc(100% - ${drawerWidth + 60}px)`,
-                ml: `${drawerWidth}px`, height: "50px", mt: `${50}px`,
-                "& svg":{fill:"#646464"},
-                "& .MuiIconButton-root:hover svg":{fill:"#ffffff"}
+                width: `100%`,
+                mt:0,
+                top:0,
+                "& svg": { fill: "#646464" },
+                "& .MuiIconButton-root:hover svg": { fill: "#ffffff" }
             }}>
             <Container maxWidth="xl" sx={{ height: "100%" }}>
                 <Toolbar disableGutters sx={{ maxHeight: "50px", minHeight: "50px !important" }}>
-                    <IconButton color="inherit" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
+                    {/* this is removed and adding new design */}
+                    {/* <IconButton color="inherit" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
                         <ArrowBackIosNewIcon />
-                    </IconButton>
+                    </IconButton> */}
 
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -125,45 +141,14 @@ function MapPageActionsBar() {
                     </Box>
 
                     {/* for big device */}
-                    <Stack direction="row" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                    {/* this is removed and adding new design */}
+                    {/* <Stack direction="row" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <Stack direction="row" sx={{ flexGrow: 1, ml: 4, display: { xs: 'none', md: 'flex' } }}>
                             <IconButtonComponent icon={<MyLocationIcon />} onClick={() => alert(1)} />
                             <IconButtonComponent icon={<LocationOnIcon />} onClick={() => alert(2)} />
-                            {/* <IconButtonComponent icon={<ColorLensIcon />} onClick={() => alert(3)} /> */}
                             <Stack direction="row" alignItems="center">
                                 <ColorInputField color={lineColor} setColor={setLineColor} text="Line Color" />
                             </Stack>
-
-                            {/* <Slider
-                                aria-label="Temperature"
-                                defaultValue={30}
-                                // getAriaValueText={valuetext}
-                                valueLabelDisplay="auto"
-                                step={10}
-                                marks
-                                min={10}
-                                max={100}
-                                sx={{alignSelf:"flex-end"}}
-                            /> */}
-                            {/* <FormControl sx={{ width: "100%" }} size="small">
-                                <InputLabel id="demo-select-small">Age</InputLabel>
-                                <Select
-                                    labelId="demo-select-small"
-                                    id="demo-select-small"
-                                    // value={filterSign}
-                                    label="Age"
-                                    onChange={() => { }}
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Sign 1</MenuItem>
-                                    <MenuItem value={20}>Sign 2</MenuItem>
-                                    <MenuItem value={30}>Sign 3</MenuItem>
-                                </Select>
-                            </FormControl> */}
-
-
                         </Stack>
 
                         <Stack direction="row" sx={{ flexGrow: 1, ml: 4, display: { xs: 'none', md: 'flex' } }}>
@@ -184,13 +169,28 @@ function MapPageActionsBar() {
                             <IconButtonComponent icon={<PictureAsPdfIcon />} onClick={() => alert(1)} />
                             <IconButtonComponent icon={<WorkspacePremiumIcon />} onClick={() => alert(1)} />
                         </Stack>
+                    </Stack> */}
 
+                    <Stack direction="row" sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        <Stack direction="row" 
+                        sx={{ flexGrow: 1, mr: "auto", display: { xs: 'none', md: 'flex' } }}>
+                            <IconButtonComponent icon={<BiCrosshair />} onClick={() => alert(1)} />
+                            <IconButtonComponent icon={<AiOutlineExpand />} onClick={() => alert(2)} />
+                            <IconButtonComponent icon={<RiRulerLine />} onClick={() => alert(2)} />
+                        </Stack>
 
-
-
+                        <Stack direction="row" 
+                        sx={{   display: { xs: 'none', md: 'flex' } }}>
+                            <IconButtonComponent icon={<BiPointer />} onClick={() => alert(1)} />
+                            <IconButtonComponent icon={<BiUndo />} onClick={() => alert(1)} />
+                            <IconButtonComponent icon={<BiRedo />} onClick={() => alert(1)} />
+                            <IconButtonComponent icon={<VscSave />} onClick={() => alert(1)} />
+                            <IconButtonComponent icon={<AiOutlineFileSearch />} onClick={() => undoRedoHandler("undo")} />
+                            <IconButtonComponent icon={<BiShareAlt />} onClick={() => undoRedoHandler("redo")} />
+                            <IconButtonComponent icon={<BsFileMedical />} onClick={() => handleShapeDelete()} />
+                        </Stack>
 
                     </Stack>
-
 
                 </Toolbar>
             </Container>

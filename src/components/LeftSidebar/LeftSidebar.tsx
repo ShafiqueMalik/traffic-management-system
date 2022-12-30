@@ -24,12 +24,28 @@ import HomeIcon from '@mui/icons-material/Home';
 import { BsConeStriped } from "react-icons/bs";
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import { ReactComponent as ConeIcon } from "assets/icons/traffic-cone.svg";
-import { BsChatLeftTextFill } from "react-icons/bs";
+import { BsChatLeftTextFill} from "react-icons/bs";
 import { IoStatsChart } from "react-icons/io5"
 import { FaGlobe } from "react-icons/fa";
 import { IoAppsSharp } from "react-icons/io5";
+import { HiMenu} from "react-icons/hi";
 import UserLevelBox from './UserLevelBox/UserLevelBox';
 export const leftSidebarNavigationData = [
+  {
+    text: "Home",
+    route: "landing-page",
+    icon: <HiMenu />
+  },
+  {
+    text: "Inbox",
+    route: "inbox",
+    icon: <BsChatLeftTextFill />
+  },
+  {
+    text: "Dashboard",
+    route: "dashboard",
+    icon: <IoStatsChart />
+  },
   {
     text: "Home",
     route: "",
@@ -40,18 +56,6 @@ export const leftSidebarNavigationData = [
         <path d="M173.822 144.873l-4.835-7.931c-3.723-6.107-11.357-8.624-18.015-5.94l-43.744 17.637 49.153 17.467c12.971 4.609 24.58-9.524 17.441-21.233z"></path>
       </g>
     </svg>
-  }, {
-    text: "Inbox",
-    route: "inbox",
-    icon: <BsChatLeftTextFill />
-  }, {
-    text: "Dashboard",
-    route: "dashboard",
-    icon: <IoStatsChart />
-  }, {
-    text: "Task",
-    route: "tasks",
-    icon: <FaGlobe />
   },
   {
     text: "Apps",
@@ -65,7 +69,17 @@ export const leftSidebarNavigationData = [
 
 const drawerWidth = 60;
 
-export default function LeftSidebar() {
+export default function LeftSidebar({open, setOpen}:any) {
+  const handleMouseEnter=(e:any,text:string)=>{
+    if(text==="Home" && e.target.querySelector(".MuiButtonBase-root").classList.contains("active")){
+      setOpen(true)
+    }
+  }
+  // const handleMouseLeave=(e:any,text:string)=>{
+  //   if(text==="Home" && e.target.classList.contains("active")){
+  //     setOpen(false)
+  //   }
+  // }
   return (
     <Box>
       {/* <AppBar
@@ -95,13 +109,17 @@ export default function LeftSidebar() {
         <Divider />
         <List component={Stack} gap="15px">
           {leftSidebarNavigationData.map(({ text, route, icon: Icon }) => (
-            <ListItem key={text} disablePadding sx={{
+            <ListItem key={text} disablePadding 
+            onMouseEnter={(e)=>handleMouseEnter(e,text)}
+            
+            sx={{
               flexDirection: "column",
               "&:hover": {
                 ".MuiListItemText-root": { visibility: "visible" }
               }
             }}>
               <ListItemButton component={NavLink} to={`${route}`}
+             
                 sx={{
                   "& svg": { fill: "#646464", width: "20px", height: "20px" },
                   "&.active svg": { fill: "#FFC001" },

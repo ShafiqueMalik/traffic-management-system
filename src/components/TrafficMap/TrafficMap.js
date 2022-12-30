@@ -175,17 +175,36 @@ function TrafficMap() {
                             <button class="marker-delete-btn" data-image-id="${copiedCustomMarkerElement?.attr("imageId")}">X</button>
                         </div>`;
                 $(".custom-marker.active").removeClass("active");
+                // $(customHtmlElement).find(".map-img-container").append(copiedCustomMarkerElement.find(".custom-marker-context-menu").clone())
             } else {
                 customHtmlElement.setAttribute("imageId", $selectImg?.attr("data-image-id") ?? "");
                 customHtmlElement.innerHTML = `<div class="map-img-container" >
                             <img id="marker-img" src="${$selectImg.attr("src")}"  alt="${$selectImg.attr("src")}"/>
                             <button class="marker-delete-btn" data-image-id="${$selectImg.attr("data-image-id")}">X</button>
                             <div class="custom-marker-context-menu">
-                                <div class="custom-marker-context-menu-item delete-icon" >
-                                   <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="DeleteIcon"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path></svg>
+                                <div class="custom-marker-context-menu-item " >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"></path></svg>
+                                    <span>Note</span>
                                 </div>
-                                <div class="custom-marker-context-menu-item edit-icon" >
-                                   <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="EditIcon"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+                                <div class="custom-marker-context-menu-item " >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M16 18v2H5v-2h11zm5-7v2H3v-2h18zm-2-7v2H8V4h11z"></path></g></svg>
+                                    <span>Arrange</span>
+                                </div>
+                                <div class="custom-marker-context-menu-item " >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H10c-1.103 0-2 .897-2 2v4H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h10c1.103 0 2-.897 2-2v-4h4c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zM4 20V10h10l.002 10H4zm16-6h-4v-4c0-1.103-.897-2-2-2h-4V4h10v10z"></path></svg> 
+                                    <span>Ctrl + C</span>
+                                </div>
+                                <div class="custom-marker-context-menu-item " >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><g><path fill="none" d="M0 0h24v24H0z"></path><path fill-rule="nonzero" d="M21 3a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h18zM4 16v3h16v-3H4zm0-2h16V5H4v9z"></path></g></svg>
+                                    <span>Edit Panel</span>
+                                </div>
+                                <div class="custom-marker-context-menu-item " >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M15 21h2v-2h-2v2zm4-12h2V7h-2v2zM3 5v14c0 1.1.9 2 2 2h4v-2H5V5h4V3H5c-1.1 0-2 .9-2 2zm16-2v2h2c0-1.1-.9-2-2-2zm-8 20h2V1h-2v22zm8-6h2v-2h-2v2zM15 5h2V3h-2v2zm4 8h2v-2h-2v2zm0 8c1.1 0 2-.9 2-2h-2v2z"></path></svg>
+                                    <span>Flip</span>
+                                </div>
+                                <div class="custom-marker-context-menu-item delete-icon" >
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"></path></g></svg>
+                                    <span>Delete</span>
                                 </div>
                             </div>
                         </div>`;
@@ -535,12 +554,16 @@ function TrafficMap() {
                         }
                     }
                     if (e.ctrlKey && e.key === "c") {
+                        console.log("COPY")
+
                         if (isMarkerSelected) {
                             map.setOptions({ draggableCursor: 'copy' });
-                            let copiedCustomMarker = markerView?.element?.querySelector(".custom-marker") ?? {};
+                            console.log(markerView)
+                            console.log(markerView?.element)
+                            let copiedCustomMarker =$(markerView?.element?.querySelector(".custom-marker"))?.clone() ?? {};
+                            console.log(copiedCustomMarker)
                             dispatch(setCopiedMarkerElement($(copiedCustomMarker)))
                         }
-
                     }
                 })
             });
